@@ -9,12 +9,13 @@ const App = () => {
   const [totalStrength, setTotalStrength] = useState(0);
   const [totalAgility, setTotalAgility] = useState(0);
 
-  console.log(zombieFighters);
+  // console.log(zombieFighters);
   console.log(team);
 
   const handleAddFighter = (newZFighter) => {
     if (money >= newZFighter.price) {
 
+      console.log("New fighter:", newZFighter)
       const newTeamArray = [...team, newZFighter];
       setTeam(newTeamArray);
 
@@ -30,9 +31,17 @@ const App = () => {
   };
 
   const handleRemoveFighter = (fighterToRemove) => {
+    const fighterIndex = team.findIndex((teamMember) => {
+      return teamMember === fighterToRemove
+    })
+
     const updatedTeam = [...team];
 
-    const removedFighter = updatedTeam.splice(fighterToRemove, 1)[0];
+    console.log("Updated team:", updatedTeam);
+    console.log("Fighter to remove:", fighterToRemove);
+
+    const removedFighter = updatedTeam.splice(fighterIndex, 1)[0];
+    console.log("Removed fighter:", removedFighter);
 
     setTeam(updatedTeam);
     setMoney((updateMoney) => updateMoney + removedFighter.price);
@@ -63,7 +72,7 @@ const App = () => {
         <ul className='fighter-team'>
           {team.map((zFighter, index) => (
             <li key={index}>
-              <img src={zFighter.image} alt={zFighter.name} />
+              <img src={zFighter.img} alt={zFighter.name} />
               <p>{zFighter.name}</p>
               <p> Price: {zFighter.price} </p>
               <p> Strenght: {zFighter.strength} </p>
@@ -78,7 +87,7 @@ const App = () => {
       <ul className='fighter-choices'>
         {zombieFighters.map((zFighter, index) => (
           <li key={index}>
-            <img src={zFighter.image} alt={zFighter.name} />
+            <img src={zFighter.img} alt={zFighter.name} />
             <p>{zFighter.name}</p>
             <p> Price: {zFighter.price} </p>
             <p> Strenght: {zFighter.strength} </p>
